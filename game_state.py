@@ -42,4 +42,6 @@ class GameState(State):
         else:
             self.round.print_round_letters()
             self.round.print_round_anagrams()
-            self.round.guess_word()
+            keep_guessing = self.round.guess_word()
+            if not keep_guessing:
+                self.next_state = "QUIT"

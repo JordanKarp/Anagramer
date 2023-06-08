@@ -1,3 +1,5 @@
+import pickle
+
 from state import State
 from util import clear_terminal, input_ranged_int
 
@@ -6,6 +8,12 @@ class GameMenuState(State):
     def __init__(self):
         super().__init__()
         self.user = None
+        self.prompt = """'
+            1. New Round\n
+            2. Upgrade Menu\n
+            3. View User Collected Vocabulary\n
+            4. Save and Quit\n
+            """
 
     def startup(self, persistent=None):
         """Upon state startup"""
@@ -24,11 +32,7 @@ class GameMenuState(State):
     def run(self):
         clear_terminal()
         self.print_header()
-        choice = input_ranged_int(
-            "1. New Round\n2. Upgrade Menu\n3. View User Collected Vocabulary\n4. Quit\n",
-            1,
-            4,
-        )
+        choice = input_ranged_int(self.prompt, 1, 4)
         if choice == 1:
             num = input_ranged_int("Game Size (3-15)\n", 3, 15)
             self.persist["round_size"] = int(num)
@@ -39,4 +43,6 @@ class GameMenuState(State):
             self.user.print_vocab()
             input()
         elif choice == 4:
+            with open(f"./saves/{self.user.name}.dat", "wb") as f:
+                pickle.dump(self.user, f)
             self.next_state = "QUIT"

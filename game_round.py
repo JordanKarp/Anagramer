@@ -55,12 +55,15 @@ class GameRound:
                 print()
             print(text, end="  ")
         print("\n")
-        print(self.all_anagrams)
+        # print(self.all_anagrams)
 
     def guess_word(self):
         guess = input("> ")
+        if guess in ["q", "Q"]:
+            return False
         if guess in self.all_anagrams:
             self.all_anagrams[guess] = True
+        return True
 
     def preguess_user_words(self):
         for word in self.all_anagrams:
