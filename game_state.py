@@ -44,4 +44,10 @@ class GameState(State):
             self.round.print_round_anagrams()
             keep_guessing = self.round.guess_word()
             if not keep_guessing:
-                self.next_state = "QUIT"
+                if self.user.can_use_extra_life():
+                    self.user.extra_lives -= 1
+                    print(f'Extra life used! {self.user.extra_lives} remaining.')
+                    input('-- ')
+                    self.next_state = "GAME_MENU"
+                else:
+                    self.next_state = "QUIT"
