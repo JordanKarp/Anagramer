@@ -61,7 +61,16 @@ class GameRound:
         guess = input("> ")
         if guess in ["q", "Q"]:
             return False
-        if guess in self.all_anagrams:
+        elif guess in ["f", "F"]:
+            if self.user.can_use_freebie():
+                self.user.freebies -= 1
+                self.give_word()
+        elif guess in ["t", "T"]:
+            if self.user.can_use_extra_time():
+                self.user.extra_times -= 1
+                # TODO
+                # Give 30 more seconds of time
+        elif guess in self.all_anagrams:
             self.all_anagrams[guess] = True
         return True
 
@@ -69,6 +78,12 @@ class GameRound:
         for word in self.all_anagrams:
             if self.user.has_word(word):
                 self.all_anagrams[word] = True
+
+    def give_word(self):
+        for word in self.all_anagrams:
+            if self.all_anagrams[word] is False:
+                self.all_anagrams[word] = True
+                return
 
     def round_won(self):
         return all(revealed for _, revealed in self.all_anagrams.items())

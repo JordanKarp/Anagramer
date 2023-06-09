@@ -9,7 +9,7 @@ from state_manager import StateManager
 def run():
     states = {
         "MAIN_MENU": MainMenuState(),
-        "HS_MENU": HighScoreState(),
+        "HIGH_SCORE": HighScoreState(),
         "GAME_MENU": GameMenuState(),
         "UPGRADE_MENU": UpgradeMenuState(),
         "GAME": GameState(),
