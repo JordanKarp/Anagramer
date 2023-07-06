@@ -1,8 +1,6 @@
 from random import choice, shuffle
 from collections import Counter
 
-# from anagram import Anagram
-
 BLANK_CHAR = "_"
 
 
@@ -47,6 +45,7 @@ class GameRound:
         print("~~~~~~~" * 6)
 
     def print_round_anagrams(self):
+        print("~~~~~~~" * 6)
         length = self.size
         for word in self.all_anagrams:
             text = word.upper() if self.all_anagrams[word] else BLANK_CHAR * len(word)
@@ -85,5 +84,5 @@ class GameRound:
                 self.all_anagrams[word] = True
                 return
 
-    def round_won(self):
+    def is_round_won(self):
         return all(revealed for _, revealed in self.all_anagrams.items())
